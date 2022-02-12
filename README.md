@@ -102,25 +102,25 @@ Some files, like `/etc/host` and `/etc/hostname`, are automatically filled by do
 # TL;DR
 How to build a system for Raspberry Pi 3 and install it to the SD card:
 ```shell
-$ git clone https://github.com/pikvm/pi-builder
-$ cd pi-builder
+ git clone https://github.com/pikvm/pi-builder
+ cd pi-builder
 ```
-* Add your public SSH key to a file ending with *` .pub `* to ```stages/ssh-root/pubkeys/```. **Make sure to add your public key if you plan on connecting to the pi over SSH!**
+* **Add your public SSH key** to a file ending with *` .pub `* to ```stages/ssh-root/pubkeys/```. **Make sure to add your public key if you plan on connecting to the pi over SSH!**
 
 ```shell
-$ make rpi4
-$ make install
+ make rpi4
+ make install
 ```
 
 How to build a system with your own stage list:
 ```shell
-$ make os BOARD=rpi3 STAGES="__init__ os __cleanup__"
+ make os BOARD=rpi3 STAGES="__init__ os __cleanup__"
 ```
 
 You can see other commands and current build config like so:
 
 ```shell
-$ make
+ make
 
 ===== Available commands  =====
     make                # Print this help
