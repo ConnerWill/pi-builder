@@ -1,0 +1,6 @@
+Place all the ssh public keys you want to be able to connect to the pi in this folder. 
+They can be named anything with a '.pub' extension. 
+
+    eg. 
+    
+        MY-SSH-KEY.pub 

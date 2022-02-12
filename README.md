@@ -63,11 +63,17 @@ HOSTNAME ?= pi
 LOCALE ?= en_US
 
 # Target system timezone
-TIMEZONE ?= Europe/Moscow
+TIMEZONE ?= America/Chicago
 
 # Memory card location
 CARD ?= /dev/mmcblk0
 ```
+
+> **Note**: If you are using a Raspberry Pi 4, you may need to update `etc/fstab` and replace in the filesystem as mentioned [here](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-4#aarch64-installation).
+> ```shell
+> sed -i 's/mmcblk0/mmcblk1/g' root/etc/fstab
+> ```
+>
 
 The most important parameters are `BOARD` (which board should the system be built for), `STAGES` (which stages should be included) and `CARD` (the SD card directory). You can change them by either passing new parameters when you run `make`, or by creating a `config.mk` with new values.
 
@@ -98,7 +104,11 @@ How to build a system for Raspberry Pi 3 and install it to the SD card:
 ```shell
 $ git clone https://github.com/pikvm/pi-builder
 $ cd pi-builder
-$ make rpi3
+```
+* Add your public SSH key to a file ending with *` .pub `* to ```stages/ssh-root/pubkeys/```. **Make sure to add your public key if you plan on connecting to the pi over SSH!**
+
+```shell
+$ make rpi4
 $ make install
 ```
 
@@ -108,6 +118,7 @@ $ make os BOARD=rpi3 STAGES="__init__ os __cleanup__"
 ```
 
 You can see other commands and current build config like so:
+
 ```shell
 $ make
 
