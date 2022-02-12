@@ -56,7 +56,7 @@ _BUILD_DIR = ./.build
 _BUILT_IMAGE_CONFIG = ./.built.conf
 
 _QEMU_GUEST_ARCH = $(ARCH)
-_QEMU_STATIC_BASE_URL = http://mirror.yandex.ru/debian/pool/main/q/qemu
+_QEMU_STATIC_BASE_URL = http://debian.uchicago.edu/debian/pool/main/q/qemu/
 _QEMU_COLLECTION = qemu
 _QEMU_STATIC = $(_QEMU_COLLECTION)/qemu-$(_QEMU_GUEST_ARCH)-static
 _QEMU_STATIC_GUEST_PATH ?= $(QEMU_PREFIX)/bin/qemu-$(_QEMU_GUEST_ARCH)-static
@@ -403,7 +403,7 @@ ifneq ($(UBOOT),)
 			&& cp -a /boot/* /tmp/boot/ \
 		"
 	$(call say,"U-Boot installation complete")
-endif	
+endif
 
 .PHONY: toolbox
 .NOTPARALLEL: clean-all install
