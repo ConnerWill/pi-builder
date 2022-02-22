@@ -1,4 +1,5 @@
 ARG REBUILD
 ENV REBUILD $REBUILD
 RUN echo $REBUILD
-RUN ssh-keygen -A
+RUN ssh-keygen -a 100 -t ed25519 -v
+RUN ssh-keygen -t rsa -b 4096 -v

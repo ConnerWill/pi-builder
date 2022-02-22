@@ -3,7 +3,7 @@ if [ `whoami` != root ]; then
 	echo "Only root can do that"
 	exit 1
 fi
-pacman --noconfirm --ask=4 -Syu && pacman --noconfirm --ask=4 --needed -S $@
+pacman --noconfirm --ask=4 -Syu --verbose && pacman --noconfirm --ask=4 --needed -S --verbose $@
 retval=$?
-rm -rf /var/cache/pacman/pkg/*
+rm -rfv /var/cache/pacman/pkg/*
 exit $retval

@@ -1,6 +1,6 @@
 # when using podman and systemd-resolved is used on host,
 # /run/systemd/resolve/resolv.conf is a bind-mount and cannot be deleted.
-RUN rm -rf \
+RUN rm -rfv \
 		/etc/*- \
 		/var/cache/pacman/pkg/* \
 		/var/lib/systemd/* \
@@ -18,7 +18,7 @@ RUN rm -rf \
 
 RUN sed -i -e "s/^#!!!CheckSpace/CheckSpace/g" /etc/pacman.conf
 
-RUN rm -f \
+RUN rm -fv \
 	/etc/pacman.d/hooks/30-systemd-tmpfiles.hook \
 	/usr/local/bin/pkg-install \
 	/usr/local/lib/libpreload-semop.so

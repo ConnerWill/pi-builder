@@ -6,4 +6,4 @@
 	branch = auto
 
 [core]
-	editor = vim
+	editor = nvim
