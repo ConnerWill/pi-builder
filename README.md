@@ -4,7 +4,7 @@
 --->
 
 # pi-builder
-> *[*builder*](https://github.com/ConnerWill/pi-builder) is an easy-to-use and extendable tool to build [Arch Linux ARM](https://archlinuxarm.org) for Raspberry Pi using [Docker](https://www.docker.com)*
+> *[*pi-builder*](https://github.com/ConnerWill/pi-builder) is an easy-to-use and extendable tool to build [Arch Linux ARM](https://archlinuxarm.org) for Raspberry Pi using [Docker](https://www.docker.com)*
      
 ![GitHub last commit](https://img.shields.io/github/last-commit/ConnerWill/pi-builder)
 ![GitHub issues](https://img.shields.io/github/issues-raw/ConnerWill/pi-builder)
@@ -40,7 +40,6 @@
 ---
 
 # Overview
-
 -----
 ## Challenge
 To build an OS, developers usually use a set of shell scripts, unique for each distribution. Those scripts create a chroot with necessary packages, edit configs, add users and so on. As a result, the system has the bare minimum to load, run and be further customised by the user.
@@ -81,8 +80,6 @@ Build sequence:
 ---
 <p align=right>(<a href=#top>back to top</a>)</p>
 
-
----
 
 -----
 # Usage
