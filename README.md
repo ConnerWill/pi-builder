@@ -40,8 +40,7 @@
 ---
 
 # Overview
-<details>
-    <summary>Click to Expand Overview</summary>
+
 -----
 ## Challenge
 To build an OS, developers usually use a set of shell scripts, unique for each distribution. Those scripts create a chroot with necessary packages, edit configs, add users and so on. As a result, the system has the bare minimum to load, run and be further customised by the user.
@@ -80,8 +79,7 @@ Build sequence:
 6. You can copy the resulting file system to the SD card and use it to load Raspberry Pi.
 
 ---
-  <p align=right>(<a href=#top>back to top</a>)</p>
-</details>
+<p align=right>(<a href=#top>back to top</a>)</p>
 
 
 ---
