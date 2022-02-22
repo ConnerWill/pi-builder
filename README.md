@@ -40,7 +40,7 @@
 ---
 
 # Overview
------
+
 ## Challenge
 To build an OS, developers usually use a set of shell scripts, unique for each distribution. Those scripts create a chroot with necessary packages, edit configs, add users and so on. As a result, the system has the bare minimum to load, run and be further customised by the user.
 
@@ -48,18 +48,18 @@ However, when you create a product based on a single-board machine (a small rout
 
 A common solution is to create a large and horrifying shell script that executes all necessary actions either on the dev machine or the device itself. In case you use  `chroot` and [binfmt_misc](https://en.wikipedia.org/wiki/Binfmt_misc) or need to save intermediate changes, script complexity grows exponentially and it quickly becomes impossible to support.
 
------
+---
 ## What is pi-builder?
 It's a new approach to target OS building on embedded devices. With pi-builder, you can build an image as if it was a simple Docker container rather than a real-world device OS. The build process is described using the default [docker file](https://docs.docker.com/engine/reference/builder) syntax and it's executed in Docker on your dev machine. The resulting image can be exported to the SD card and loaded directly to Raspberry Pi.
 
------
+---
 ## Why pi-builder?
 * **Builds are documented and repeatable**. A docker file is virtually ready documentation listing steps needed to set up the whole system.
 * **Simplicity**. Seriously, what can be easier than writing a docker file?
 * **Speed and build caching**. Target OS building can consist of hundreds of complicated and long steps. Thanks to Docker and its caching you won't run all of them each time you build a new OS; execution will start from whatever command was changed, taking previous results from cache.
 * **Real environment testing**. When you're developing software that will run on Raspberry Pi it makes sense to test it using the same environment to avoid future problems.
 
------
+---
 ## How does it work?
 Arch Linux ARM (and other systems as well) comes in form of a [minimal root file system](https://mirror.yandex.ru/archlinux-arm/os/) you can install on and run from a flash drive. As those are regular roots, you can use them to create your own base Docker image using [FROM scratch](https://docs.docker.com/develop/develop-images/baseimages). This image, however, will contain executables and libraries for the `ARM` architecture, and if your machine is, eg., `x86_64`, none of the commands in this image will run.
 
