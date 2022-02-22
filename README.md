@@ -159,6 +159,11 @@ How to build a system for Raspberry Pi 3 and install it to the SD card:
  make rpi4
  make install
 ```
+To enter the built filesystem, to install software and configure the OS, run this command
+
+```shell
+ make shell
+```
 
 How to build a system with your own stage list:
 ```shell
@@ -168,7 +173,7 @@ How to build a system with your own stage list:
 You can see other commands and current build config like so:
 
 ```shell
- make
+$  make
 
 ===== Available commands  =====
     make                # Print this help
