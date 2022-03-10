@@ -1,10 +1,13 @@
 <div align="center">
-<!---
-<img width="480" height="320" src="/media/pi-builder-banner.png">
---->
+	
+<img width="480" height="320" src="https://github.com/ConnerWill/arch-pi/blob/master/arch-pi.png">
+
+</div>
+
+<div align="center">
 
 # pi-builder
-> *[*pi-builder*](https://github.com/ConnerWill/pi-builder) is an easy-to-use and extendable tool to build [Arch Linux ARM](https://archlinuxarm.org) for Raspberry Pi using [Docker](https://www.docker.com)*
+> *[*pi-builder*](https://github.com/ConnerWill/pi-builder) is an easy-to-use and extendable tool to build [Arch Linux ARM](https://archlinuxarm.org) for Raspberry Pi using [Docker](https://www.docker.com) and [QEMU](https://gitlab.com/qemu-project)*
      
 ![GitHub last commit](https://img.shields.io/github/last-commit/ConnerWill/pi-builder)
 ![GitHub issues](https://img.shields.io/github/issues-raw/ConnerWill/pi-builder)
@@ -20,9 +23,10 @@
 # Table of Contents
 <details>
     <summary>Click to Expand Table of Contents</summary>
-  ---
+
+---
+
 * [pi-builder](#pi-builder)
-* [Table of Contents](#table-of-contents)
 * [Overview](#overview)
    * [Challenge](#challenge)
    * [What is pi-builder?](#what-is-pi-builder)
@@ -33,7 +37,7 @@
 * [Limitations](#limitations)
 * [TL;DR](#tldr)
 * [License](#license)
-  ---
+	
   <p align=right>(<a href=#top>back to top</a>)</p>
 </details>
 
@@ -49,10 +53,12 @@ However, when you create a product based on a single-board machine (a small rout
 A common solution is to create a large and horrifying shell script that executes all necessary actions either on the dev machine or the device itself. In case you use  `chroot` and [binfmt_misc](https://en.wikipedia.org/wiki/Binfmt_misc) or need to save intermediate changes, script complexity grows exponentially and it quickly becomes impossible to support.
 
 ---
+
 ## What is pi-builder?
 It's a new approach to target OS building on embedded devices. With pi-builder, you can build an image as if it was a simple Docker container rather than a real-world device OS. The build process is described using the default [docker file](https://docs.docker.com/engine/reference/builder) syntax and it's executed in Docker on your dev machine. The resulting image can be exported to the SD card and loaded directly to Raspberry Pi.
 
 ---
+
 ## Why pi-builder?
 * **Builds are documented and repeatable**. A docker file is virtually ready documentation listing steps needed to set up the whole system.
 * **Simplicity**. Seriously, what can be easier than writing a docker file?
@@ -60,6 +66,7 @@ It's a new approach to target OS building on embedded devices. With pi-builder, 
 * **Real environment testing**. When you're developing software that will run on Raspberry Pi it makes sense to test it using the same environment to avoid future problems.
 
 ---
+
 ## How does it work?
 Arch Linux ARM (and other systems as well) comes in form of a [minimal root file system](https://mirror.yandex.ru/archlinux-arm/os/) you can install on and run from a flash drive. As those are regular roots, you can use them to create your own base Docker image using [FROM scratch](https://docs.docker.com/develop/develop-images/baseimages). This image, however, will contain executables and libraries for the `ARM` architecture, and if your machine is, eg., `x86_64`, none of the commands in this image will run.
 
@@ -77,11 +84,11 @@ Build sequence:
 5. Pi-builder's utility [docker-extract](https://github.com/pikvm/pi-builder/blob/master/toolbox/docker-extract) extracts the container from Docker's internal storage and moves to the directory, making it an ordinary root file system.
 6. You can copy the resulting file system to the SD card and use it to load Raspberry Pi.
 
----
+
 <p align=right>(<a href=#top>back to top</a>)</p>
 
+---
 
------
 # Usage
 To build with pi-builder you need a fresh Docker that can run [privileged containers](https://docs.docker.com/engine/reference/commandline/run/#full-container-capabilities---privileged) (needed by [auxilary image](https://github.com/pikvm/pi-builder/blob/master/toolbox/Dockerfile.root) to install `binfmt_misc`, format the SD card and some other operations).
 
@@ -126,7 +133,6 @@ You can create your own stages and add them to the build alongside stock ones. T
 
 ---
 
------
 # Stock stages
 * `__init__` - the main stage that creates the base image based on root FS Arch Linux ARM. It should ALWAYS come first in the `STAGES` list. 
 * `os` - installs some packages and sets the system up a bit to make it more comfortable. You can [check what's inside](https://github.com/pikvm/pi-builder/tree/master/stages/os).
@@ -142,7 +148,7 @@ You can create your own stages and add them to the build alongside stock ones. T
 ---
 
 # Limitations
------
+
 Some files, like `/etc/host` and `/etc/hostname`, are automatically filled by docker and all changes made from the docker file will be lost. For the hostname, there is a hack in the `Makefile` that writes the hostname to the exported system, or sets this name on `make run`. So in case you need to change something in those files, add it to the `Makefile` in a similar way.
 
 ---
