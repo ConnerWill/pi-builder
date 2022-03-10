@@ -117,19 +117,17 @@ TIMEZONE ?= America/Chicago
 CARD ?= /dev/mmcblk0
 ```
 
-> ***Untested***
-> > **Note**: If you are using a Raspberry Pi 4, you may need to update `etc/fstab` and replace in the filesystem as mentioned [here](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-4#aarch64-installation).
-> > ```shell
-> > sed -i 's/mmcblk0/mmcblk1/g' root/etc/fstab
-> > ```
-> >
-
-
-The most important parameters are `BOARD` (which board should the system be built for), `STAGES` (which stages should be included) and `CARD` (the SD card directory). You can change them by either passing new parameters when you run `make`, or by creating a `config.mk` with new values.
+**The most important parameters** are `BOARD` (which board should the system be built for), `STAGES` (which stages should be included) and `CARD` (the SD card directory). You can change them by either passing new parameters when you run `make`, or by creating a `config.mk` with new values.
 
 The `__init__` stage must always be first: it has init instructions to create the base system image (`FROM scratch`). Stages that follow make the system "feel like home" -- by installing useful packages, setting up watchdog, making the system read-only, setting up root SSH keys and cleaning up temp files.
 
 You can create your own stages and add them to the build alongside stock ones. To do so, create a directory for your stage in the `stages` folder and place the `Dockerfile.part` file there, similar to other stages. Alternatively, you can follow the same path as [Pi-KVM](https://github.com/pikvm/os) (which was the first project pi-builder was made for).
+
+> **Note** *(Untested)***:**
+> > If you are using a Raspberry Pi 4, you may need to update `etc/fstab` and replace in the filesystem as mentioned [here](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-4#aarch64-installation).
+> > ```shell
+> > sed -i 's/mmcblk0/mmcblk1/g' root/etc/fstab
+> > ```
 
 ---
 
@@ -218,7 +216,6 @@ $  make
     <summary>Click to Expand License</summary>
 
 # License
-Copyright (C) 2018 by Maxim Devaev mdevaev@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
