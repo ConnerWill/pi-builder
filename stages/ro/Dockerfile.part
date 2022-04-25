@@ -2,15 +2,15 @@
 
 RUN [ ! -f /boot/cmdline.txt ] || sed -i -e "s|\<rw\>|ro|g" /boot/cmdline.txt
 RUN [ ! -f /boot/boot.txt ] || ( \
-        pacman --noconfirm --ask=4 --needed -S uboot-tools \
+        pacman --noconfirm --ask=4 --needed -S --verbose uboot-tools \
         && cd /boot \
         && sed -i -e "s|\<rw\>|ro|g" boot.txt \
         && ./mkscr \
     )
 
-RUN mkdir -p /var/lib/private && chmod 700 /var/lib/private \
-	&& mkdir -p /var/lib/dhcpcd && chmod 750 /var/lib/dhcpcd \
-	&& mkdir -p /var/lib/dhclient && chmod 755 /var/lib/dhclient
+RUN mkdir -v -p /var/lib/private && chmod --verbose 700 /var/lib/private \
+	&& mkdir -v -p /var/lib/dhcpcd && chmod --verbose 750 /var/lib/dhcpcd \
+	&& mkdir -v -p /var/lib/dhclient && chmod --verbose 755 /var/lib/dhclient
 
 COPY stages/ro/fstab /etc/
 COPY stages/ro/ro /usr/local/bin/

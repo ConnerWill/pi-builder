@@ -30,11 +30,16 @@ UBOOT ?=
 STAGES ?= __init__ os pikvm-repo watchdog no-bluetooth no-audit ro ssh-keygen __cleanup__
 DOCKER ?= docker
 
-HOSTNAME ?= pi
+HOSTNAME ?= PiBuilder
 LOCALE ?= en_US
+<<<<<<< HEAD
 TIMEZONE ?= Europe/Moscow
 #REPO_URL ?= http://mirror.yandex.ru/archlinux-arm
 REPO_URL ?= http://de3.mirror.archlinuxarm.org
+=======
+TIMEZONE ?= America/Chicago
+REPO_URL = http://mirror.archlinuxarm.org
+>>>>>>> origin
 PIKVM_REPO_URL ?= https://files.pikvm.org/repos/arch/
 PIKVM_REPO_KEY ?= 912C773ABBD1B584
 BUILD_OPTS ?=
@@ -57,7 +62,7 @@ _BUILD_DIR = ./.build
 _BUILT_IMAGE_CONFIG = ./.built.conf
 
 _QEMU_GUEST_ARCH = $(ARCH)
-_QEMU_STATIC_BASE_URL = http://mirror.yandex.ru/debian/pool/main/q/qemu
+_QEMU_STATIC_BASE_URL = http://debian.uchicago.edu/debian/pool/main/q/qemu
 _QEMU_COLLECTION = qemu
 _QEMU_STATIC = $(_QEMU_COLLECTION)/qemu-$(_QEMU_GUEST_ARCH)-static
 _QEMU_STATIC_GUEST_PATH ?= $(QEMU_PREFIX)/bin/qemu-$(_QEMU_GUEST_ARCH)-static
@@ -412,7 +417,7 @@ ifneq ($(UBOOT),)
 			&& cp -a /boot/* /tmp/boot/ \
 		"
 	$(call say,"U-Boot installation complete")
-endif	
+endif
 
 
 .PHONY: toolbox qemu

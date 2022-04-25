@@ -2,3 +2,7 @@
 /.cache/
 /.build/
 /.built.conf
+*-ignore.pub
+*.bak
+*.pub
+ignore/

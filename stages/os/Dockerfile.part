@@ -4,7 +4,7 @@ RUN echo "$LOCALE.UTF-8 UTF-8" > /etc/locale.gen \
 	&& locale-gen
 ENV LC_ALL en_US.UTF-8
 
-RUN rm -f /etc/localtime \
+RUN rm -f -v /etc/localtime \
 	&& ln -s "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime
 
 RUN echo "HOOKS=(base udev block filesystems)" >> /etc/mkinitcpio.conf
@@ -13,27 +13,32 @@ RUN sed -i -e "s|\<root=/dev/mmcblk0p2\>|root=LABEL=PIROOT|g" /boot/cmdline.txt
 RUN sed -i -e "s|^/dev/mmcblk0p1\>|LABEL=PIBOOT|g" /etc/fstab
 
 RUN echo "Server = $REPO_URL/\$arch/\$repo" > /etc/pacman.d/mirrorlist \
-	&& pacman-key --init \
-	&& pacman-key --populate archlinuxarm
+	&& pacman-key --verbose --init  \
+	&& pacman-key --verbose --populate archlinuxarm
 
 RUN sed -i -e "s/^CheckSpace/#!!!CheckSpace/g" /etc/pacman.conf
+RUN sed -i -e "s/^#Color/Color/g" /etc/pacman.conf
+
 
 RUN pacman --noconfirm --ask=4 -Syy \
-	&& pacman --needed --noconfirm --ask=4 -S \
+	&& pacman --needed --noconfirm --ask=4 -S --verbose \
 		glibc \
 		pacman \
 	&& pacman-db-upgrade \
-	&& pacman --noconfirm --ask=4 -Syu \
-	&& pacman --needed --noconfirm --ask=4 -S \
+	&& pacman --noconfirm --ask=4 -Syu --verbose \
+	&& pacman --needed --noconfirm --ask=4 -S --verbose \
 		p11-kit \
 		archlinux-keyring \
 		ca-certificates \
 		ca-certificates-mozilla \
 		ca-certificates-utils \
-	&& pacman --needed --noconfirm --ask=4 -S \
+	&& pacman --needed --noconfirm --ask=4 -S --verbose \
 		base \
 		base-devel \
-		vim \
+        zsh \
+		neovim \
+		bat \
+		lsd \
 		colordiff \
 		tree \
 		wget \
@@ -55,14 +60,14 @@ RUN pacman --noconfirm --ask=4 -Syy \
 	&& case "$ARCH" in \
 		arm) \
 			case "$BOARD" in \
-				rpi|zero|zerow) pacman --needed --noconfirm --ask=4 -S linux-rpi-legacy linux-rpi-legacy-headers;; \
-				rpi2|rpi3|rpi4|zero2w) pacman --needed --noconfirm --ask=4 -S linux-rpi linux-rpi-headers;; \
-				*) pacman --needed --noconfirm --ask=4 -S linux-armv7-headers;; \
+				rpi|zero|zerow) pacman --needed --noconfirm --ask=4 -S --verbose linux-rpi-legacy linux-rpi-legacy-headers;; \
+				rpi2|rpi3|rpi4|zero2w) pacman --needed --noconfirm --ask=4 -S --verbose linux-rpi linux-rpi-headers;; \
+				*) pacman --needed --noconfirm --ask=4 -S --verbose linux-armv7-headers;; \
 			esac;; \
-		aarch64) pacman --needed --noconfirm --ask=4 -S linux-aarch64-headers;; \
+		aarch64) pacman --needed --noconfirm --ask=4 -S --verbose linux-aarch64-headers;; \
 		*) echo "Unknown architecture: $ARCH"; exit 1;; \
 	esac \
-	&& rm -rf /var/cache/pacman/pkg/*
+	&& rm -rfv /var/cache/pacman/pkg/*
 
 # https://github.com/pikvm/pikvm/issues/190
 RUN echo 'RNGD_OPTS="-o /dev/random -r /dev/hwrng -x jitter -x pkcs11 -x rtlsdr"' > /etc/conf.d/rngd \
@@ -81,11 +86,11 @@ COPY stages/os/gitconfig /root/.gitconfig
 COPY stages/os/gitconfig /home/alarm/.gitconfig
 RUN mkdir /tmp/linux-profile \
 	&& git clone https://github.com/mdevaev/linux-profile.git /tmp/linux-profile --depth=1 \
-	&& cp -a /tmp/linux-profile/{.bash_profile,.bashrc,.vimrc,.vimpagerrc,.vim} /etc/skel \
-	&& cp -a /tmp/linux-profile/{.bash_profile,.bashrc,.vimrc,.vimpagerrc,.vim} /root \
-	&& cp -a /tmp/linux-profile/{.bash_profile,.bashrc,.vimrc,.vimpagerrc,.vim} /home/alarm \
+	&& cp -a -v /tmp/linux-profile/{.bash_profile,.bashrc,.vimrc,.vimpagerrc,.vim} /etc/skel \
+	&& cp -a -v /tmp/linux-profile/{.bash_profile,.bashrc,.vimrc,.vimpagerrc,.vim} /root \
+	&& cp -a -v /tmp/linux-profile/{.bash_profile,.bashrc,.vimrc,.vimpagerrc,.vim} /home/alarm \
 	&& chown -R alarm:alarm /home/alarm/{.bash_profile,.bashrc,.vimrc,.vimpagerrc,.vim,.gitconfig} \
-	&& rm -rf /tmp/linux-profile
+	&& rm -rfv /tmp/linux-profile
 
 COPY stages/os/pistat /usr/local/bin/
 
