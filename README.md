@@ -99,7 +99,7 @@ Pi-builder is configured by the main [Makefile](https://github.com/pikvm/pi-buil
 PROJECT ?= common
 
 # Target Raspberry Pi platform
-BOARD ?= rpi
+BOARD ?= rpi4
 
 # List of necessary stages, more on it below
 STAGES ?= __init__ os pikvm-repo watchdog no-bluetooth no-audit ro ssh-keygen __cleanup__
@@ -154,6 +154,7 @@ Some files, like `/etc/host` and `/etc/hostname`, are automatically filled by do
 # TL;DR
 How to build a system for Raspberry Pi 3 and install it to the SD card:
 ```shell
+<<<<<<< HEAD
  git clone https://github.com/pikvm/pi-builder
  cd pi-builder
 ```
@@ -167,11 +168,21 @@ To enter the built filesystem, to install software and configure the OS, run thi
 
 ```shell
  make shell
+=======
+$ git clone https://github.com/pikvm/pi-builder
+$ cd pi-builder
+$ make rpi4
+$ make install
+>>>>>>> upstream/master
 ```
 
 How to build a system with your own stage list:
 ```shell
+<<<<<<< HEAD
  make os BOARD=rpi3 STAGES="__init__ os __cleanup__"
+=======
+$ make os BOARD=rpi4 STAGES="__init__ os __cleanup__"
+>>>>>>> upstream/master
 ```
 
 You can see other commands and current build config like so:
@@ -181,7 +192,7 @@ $  make
 
 ===== Available commands  =====
     make                # Print this help
-    rpi|rpi2|rpi3|rpi4|zero|zerow|zero2w  # Build Arch-ARM rootfs with pre-defined config
+    rpi2|rpi3|rpi4|zero2w  # Build Arch-ARM rootfs with pre-defined config
     make shell          # Run Arch-ARM shell
     make binfmt         # Before build
     make scan           # Find all RPi devices in the local network
@@ -191,7 +202,7 @@ $  make
 
 ===== Running configuration =====
     PROJECT = common
-    BOARD   = rpi
+    BOARD   = rpi4
     STAGES  = __init__ os watchdog no-bluetooth ro ssh-keygen __cleanup__
 
     BUILD_OPTS =

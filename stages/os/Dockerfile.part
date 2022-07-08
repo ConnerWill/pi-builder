@@ -57,12 +57,17 @@ RUN pacman --noconfirm --ask=4 -Syy \
 		bc \
 		ccache \
 		screen \
+		rpi-eeprom \
 	&& case "$ARCH" in \
 		arm) \
 			case "$BOARD" in \
-				rpi|zero|zerow) pacman --needed --noconfirm --ask=4 -S --verbose linux-rpi-legacy linux-rpi-legacy-headers;; \
+<<<<<<< HEAD
 				rpi2|rpi3|rpi4|zero2w) pacman --needed --noconfirm --ask=4 -S --verbose linux-rpi linux-rpi-headers;; \
 				*) pacman --needed --noconfirm --ask=4 -S --verbose linux-armv7-headers;; \
+=======
+				rpi2|rpi3|rpi4|zero2w) pacman --needed --noconfirm --ask=4 -S linux-rpi linux-rpi-headers;; \
+				*) pacman --needed --noconfirm --ask=4 -S linux-armv7-headers;; \
+>>>>>>> upstream/master
 			esac;; \
 		aarch64) pacman --needed --noconfirm --ask=4 -S --verbose linux-aarch64-headers;; \
 		*) echo "Unknown architecture: $ARCH"; exit 1;; \
